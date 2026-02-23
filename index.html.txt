@@ -6,7 +6,7 @@
     <title>余暇が出来たので模型製作を再開した件 - プラモデル・AFV・飛行機模型の製作記録</title>
     <meta name="description" content="プラモデル、AFV、飛行機模型、艦船模型などのスケールモデル製作ギャラリー">
     <meta name="keywords" content="プラモデル,スケールモデル,AFV,飛行機模型,艦船模型,ミリタリーモデル,模型製作,ガンプラ,鶴ヶ城">
-    <link rel="stylesheet" href="/tony-model-gallery/css/style.css">
+    <link rel="stylesheet" href="tony-model-gallery/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
 </head>
@@ -97,7 +97,7 @@
         </div>
     </footer>
 
-    <script src="/tony-model-gallery/js/main.js"></script>
+    <script src="tony-model-gallery/js/main.js"></script>
 
 </body>
 </html>
