@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>作品詳細 - 余暇が出来たので模型製作を再開した件</title>
+    <meta name="description" content="模型作品の詳細ページ">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="container detail-header">
+            <a href="index.html" class="home-icon" title="ホームに戻る">
+                <i class="fas fa-home"></i>
+            </a>
+            <button id="backToGallery" class="back-button">
+                <i class="fas fa-arrow-left"></i>
+                ギャラリーに戻る
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <article class="work-detail">
+            <div class="container">
+                <!-- 作品情報 -->
+                <div class="work-header">
+                    <h1 id="workTitle" class="work-title"></h1>
+                    <p id="workDate" class="work-date"></p>
+                </div>
+
+                <!-- メイン画像 -->
+                <div class="work-main-image">
+                    <img id="mainImage" src="" alt="">
+                </div>
+
+                <!-- 説明文 -->
+                <div class="work-description">
+                    <h2>作品説明</h2>
+                    <p id="workDescription"></p>
+                    <div id="workDetailText" class="work-detail-text"></div>
+                </div>
+
+                <!-- 追加画像 -->
+                <div id="additionalImagesSection" class="additional-images-section">
+                    <h2>詳細写真</h2>
+                    <div id="additionalImages" class="additional-images">
+                        <!-- JavaScriptで動的に生成 -->
+                    </div>
+                </div>
+
+                <!-- いいねボタン -->
+                <div class="like-section">
+                    <button id="likeButton" class="like-button">
+                        <i class="fas fa-heart"></i>
+                        <span id="likeCount">0</span>
+                    </button>
+                </div>
+
+                <!-- コメントセクション -->
+                <div class="comments-section">
+                    <h2>コメント</h2>
+                    
+                    <!-- コメント入力フォーム -->
+                    <div class="comment-form">
+                        <textarea id="commentInput" placeholder="コメントを入力してください（個人情報は非公開です）" rows="4"></textarea>
+                        <button id="submitComment" class="submit-button">コメントを送信</button>
+                    </div>
+
+                    <!-- コメント一覧 -->
+                    <div id="commentsList" class="comments-list">
+                        <!-- JavaScriptで動的に生成 -->
+                    </div>
+                </div>
+
+                <!-- トップに戻る -->
+                <div class="page-top">
+                    <button id="scrollToTop" class="scroll-top-button">
+                        <i class="fas fa-arrow-up"></i>
+                        ページトップへ
+                    </button>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 余暇が出来たので模型製作を再開した件. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/work.js"></script>
+</body>
+</html>

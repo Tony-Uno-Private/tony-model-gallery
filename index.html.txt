@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>余暇が出来たので模型製作を再開した件 - プラモデル・AFV・飛行機模型の製作記録</title>
+    <meta name="description" content="プラモデル、AFV、飛行機模型、艦船模型などのスケールモデル製作ギャラリー">
+    <meta name="keywords" content="プラモデル,スケールモデル,AFV,飛行機模型,艦船模型,ミリタリーモデル,模型製作,ガンプラ,鶴ヶ城">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1 class="site-title">余暇が出来たので模型製作を再開した件</h1>
+            <p class="site-subtitle">プラモデル・AFV・飛行機模型の製作記録</p>
+        </div>
+    </header>
+
+    <main>
+        <!-- メインビジュアル -->
+        <section class="hero-section">
+            <div class="hero-image">
+                <img src="https://www.genspark.ai/api/files/s/6g0RaiZo" alt="模型作品が飾られた棚">
+            </div>
+        </section>
+
+        <!-- ジャンルナビゲーション -->
+        <section class="genre-section">
+            <div class="container">
+                <h2 class="section-title">作品ジャンル</h2>
+                <div class="genre-grid">
+                    <a href="gallery.html?genre=aircraft" class="genre-card">
+                        <i class="fas fa-plane"></i>
+                        <h3>飛行機モデル</h3>
+                    </a>
+                    <a href="gallery.html?genre=afv" class="genre-card">
+                        <div class="tank-icon">
+                            <div class="tank-turret"></div>
+                            <div class="tank-body"></div>
+                            <div class="tank-tracks"></div>
+                        </div>
+                        <h3>AFVモデル</h3>
+                    </a>
+                    <a href="gallery.html?genre=ship" class="genre-card">
+                        <i class="fas fa-ship"></i>
+                        <h3>艦船モデル</h3>
+                    </a>
+                    <a href="gallery.html?genre=robot" class="genre-card">
+                        <i class="fas fa-robot"></i>
+                        <h3>ロボット・SFモデル</h3>
+                    </a>
+                    <a href="gallery.html?genre=other" class="genre-card">
+                        <i class="fas fa-shapes"></i>
+                        <h3>その他モデル</h3>
+                    </a>
+                    <div class="genre-card genre-card-placeholder">
+                        <i class="fas fa-plus"></i>
+                        <h3>Coming Soon</h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 新着作品 -->
+        <section class="new-works-section">
+            <div class="container">
+                <h2 class="section-title">新着作品</h2>
+                <div id="newWorksList" class="new-works-list">
+                    <!-- JavaScriptで動的に生成 -->
+                </div>
+            </div>
+        </section>
+
+        <!-- SNSとリンク -->
+        <section class="links-section">
+            <div class="container">
+                <div class="social-links">
+                    <a href="https://x.com/uno_qu_tony" target="_blank" rel="noopener noreferrer" class="social-link">
+                        <i class="fab fa-x-twitter"></i>
+                        <span>X (Twitter) @uno_qu_tony - 徒仁伊</span>
+                    </a>
+                </div>
+                <p class="link-message">
+                    <i class="fas fa-handshake"></i>
+                    模型モデラーの方、相互リンクを希望しています！お気軽にご連絡ください。
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 余暇が出来たので模型製作を再開した件. All rights reserved.</p>
+            <p class="admin-link"><a href="admin.html">管理画面</a></p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

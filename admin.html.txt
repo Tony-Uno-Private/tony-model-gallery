@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理画面 - 余暇が出来たので模型製作を再開した件</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- ログイン画面 -->
+    <div id="loginSection" class="login-section">
+        <div class="login-box">
+            <h1>管理画面ログイン</h1>
+            <form id="loginForm">
+                <input type="password" id="passwordInput" placeholder="パスワードを入力" required>
+                <button type="submit">ログイン</button>
+            </form>
+            <p class="error-message" id="loginError"></p>
+            <a href="index.html" class="back-link">ホームに戻る</a>
+        </div>
+    </div>
+
+    <!-- 管理画面メイン -->
+    <div id="adminSection" class="admin-section" style="display: none;">
+        <header>
+            <div class="container">
+                <h1>管理画面</h1>
+                <div class="admin-header-buttons">
+                    <a href="index.html" class="button">サイトを表示</a>
+                    <button id="logoutButton" class="button button-secondary">ログアウト</button>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <div class="container">
+                <!-- タブナビゲーション -->
+                <div class="admin-tabs">
+                    <button class="tab-button active" data-tab="works">作品管理</button>
+                    <button class="tab-button" data-tab="comments">コメント管理</button>
+                </div>
+
+                <!-- 作品管理タブ -->
+                <div id="worksTab" class="tab-content active">
+                    <div class="admin-toolbar">
+                        <button id="addNewWork" class="button button-primary">
+                            <i class="fas fa-plus"></i>
+                            新規作品追加
+                        </button>
+                    </div>
+
+                    <div id="worksList" class="works-list">
+                        <!-- JavaScriptで動的に生成 -->
+                    </div>
+                </div>
+
+                <!-- コメント管理タブ -->
+                <div id="commentsTab" class="tab-content">
+                    <div id="adminCommentsList" class="admin-comments-list">
+                        <!-- JavaScriptで動的に生成 -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- 作品編集モーダル -->
+    <div id="workModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">作品編集</h2>
+                <button class="modal-close" id="closeModal">&times;</button>
+            </div>
+            <form id="workForm">
+                <input type="hidden" id="workId">
+                
+                <div class="form-group">
+                    <label>作品タイトル *</label>
+                    <input type="text" id="workTitleInput" required>
+                </div>
+
+                <div class="form-group">
+                    <label>ジャンル *</label>
+                    <select id="workGenre" required>
+                        <option value="aircraft">飛行機モデル</option>
+                        <option value="afv">AFVモデル</option>
+                        <option value="ship">艦船モデル</option>
+                        <option value="robot">ロボット・SFモデル</option>
+                        <option value="other">その他モデル</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>完成年月</label>
+                    <input type="text" id="workCompletedDate" placeholder="例: 2023年3月">
+                </div>
+
+                <div class="form-group">
+                    <label>メイン画像URL *</label>
+                    <input type="url" id="workMainImage" required placeholder="https://...">
+                    <small>画像のURLを入力してください</small>
+                </div>
+
+                <div class="form-group">
+                    <label>作品説明 *</label>
+                    <textarea id="workDescription" rows="3" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>詳細説明文</label>
+                    <textarea id="workDetailText" rows="5"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>追加画像（JSON形式）</label>
+                    <textarea id="workAdditionalImages" rows="5" placeholder='[{"url": "https://...", "caption": "説明文"}]'></textarea>
+                    <small>形式: [{"url": "画像URL", "caption": "キャプション"}]</small>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="workIsNew">
+                        新着として表示
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label>表示順序</label>
+                    <input type="number" id="workSortOrder" value="0">
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" id="deleteWork" class="button button-danger">削除</button>
+                    <button type="submit" class="button button-primary">保存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/admin.js"></script>
+</body>
+</html>
