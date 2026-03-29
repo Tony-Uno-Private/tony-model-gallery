@@ -872,23 +872,23 @@ window.worksData = [
     "detail_text": "キットはタミヤ　金属砲身と純正エッチンググリル使用。自分、AFVは「汚すぎず、キレイすぎない」が信条なのですが、ティーガーⅠには思い入れがあり（ドイツの戦車はァァァァァァァアアア 世界一ィィィィーーーーッ！）、模型メーカーの製作見本のイメージで、ウェザリングは最少限に止め、キレイ側にギリギリまで寄せて仕上げました。",
     "additional_images": [
       {
-        "url": "https://i.imgur.com/FsNa3RP.jpg",
+        "url": "https://i.imgur.com/fA8ka4S.jpg",
         "caption": "色調は迷彩パターン塗装により、1ランク明度を上げた色を使用しました。"
       },
       {
-        "url": "https://i.imgur.com/WlRRMiA.jpg",
+        "url": "https://i.imgur.com/HDeMdPr.jpg",
         "caption": "ティーガーⅠのところでも書きましたが、自分、フィギュア塗装は上手くもなんともないですが、乗せずにはいられないタチ。使用したフィギュアはキット純正品ですが、さすがタミヤ、良く出来てます。"
       },
       {
-        "url": "https://i.imgur.com/h3YV9aw.jpg",
+        "url": "https://i.imgur.com/7qMkCZn.jpg",
         "caption": "イギリス軍に鹵獲されたティーガーⅠを、丸ごと計測してセンチメートル単位まで完全にデータ化した図面が存在するのですが、ターレット後部の機関銃の形状が、図面と明らかに異なる旧モールドです。"
       },
       {
-        "url": "https://i.imgur.com/5zJnPKf.jpg",
+        "url": "https://i.imgur.com/gqq71qr.jpg",
         "caption": "エッチングパーツ、冷却ファン開口グリルと言うより、昆虫の複眼モールド(元)が強烈過ぎて無視できず、エッチングパーツ使用を選択。"
       },
       {
-        "url": "https://i.imgur.com/G6gnN1m.jpg",
+        "url": "https://i.imgur.com/HDTZWYb.jpg",
         "caption": "実は完成直後、床に落下させてしまい、一部のアクセサリーが破損。タミヤに補修パーツ有無を問い合わせたが対応不可との回答だったので、プラ板切ってニコイチで修復しました。"
       }
     ],
