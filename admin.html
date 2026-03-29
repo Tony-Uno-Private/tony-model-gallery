@@ -7,138 +7,629 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        .img-preview {
+            width: 80px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            cursor: pointer;
+        }
+        .img-preview-large {
+            max-width: 100%;
+            max-height: 200px;
+            object-fit: contain;
+            border-radius: 6px;
+            margin: 8px 0;
+            display: block;
+        }
+        .additional-img-row {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #ecf0f1;
+        }
+        .additional-img-row img {
+            width: 100px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+        .additional-img-row .img-inputs {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .additional-img-row input,
+        .additional-img-row textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 0.9rem;
+        }
+        .additional-img-row textarea {
+            resize: vertical;
+            min-height: 60px;
+        }
+        .btn-remove-img {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 4px 10px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            flex-shrink: 0;
+        }
+        .btn-add-img {
+            background: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 8px 16px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin-top: 8px;
+        }
+        .output-section {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        .output-section textarea {
+            width: 100%;
+            height: 200px;
+            background: #1a252f;
+            color: #2ecc71;
+            border: 1px solid #34495e;
+            border-radius: 4px;
+            padding: 12px;
+            font-family: monospace;
+            font-size: 0.85rem;
+            resize: vertical;
+        }
+        .copy-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
+        .copy-btn:hover { background: #2980b9; }
+        .copy-success {
+            color: #2ecc71;
+            margin-left: 10px;
+            font-size: 0.9rem;
+        }
+        .work-item-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        .btn-edit {
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 6px 14px;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+        .btn-edit:hover { background: #2980b9; }
+        .search-box {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+        .genre-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            color: white;
+            margin-left: 8px;
+        }
+        .badge-aircraft { background: #3498db; }
+        .badge-afv { background: #27ae60; }
+        .badge-ship { background: #2980b9; }
+        .badge-robot { background: #9b59b6; }
+        .badge-other { background: #95a5a6; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; overflow-y: auto; padding: 20px; }
+        .modal.active { display: flex; align-items: flex-start; justify-content: center; }
+        .modal-content { background: white; border-radius: 10px; max-width: 850px; width: 100%; margin: 20px auto; }
+        .modal-header { padding: 20px; border-bottom: 1px solid #ecf0f1; display: flex; justify-content: space-between; align-items: center; }
+        .modal-header h2 { color: #2c3e50; }
+        .modal-close { background: none; border: none; font-size: 2rem; cursor: pointer; color: #95a5a6; }
+        .modal-close:hover { color: #2c3e50; }
+        .modal-body { padding: 20px; max-height: 75vh; overflow-y: auto; }
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; margin-bottom: 6px; color: #2c3e50; font-weight: 500; font-size: 0.95rem; }
+        .form-group input[type="text"],
+        .form-group input[type="url"],
+        .form-group input[type="number"],
+        .form-group select,
+        .form-group textarea {
+            width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-family: inherit; font-size: 0.95rem;
+        }
+        .form-group textarea { resize: vertical; }
+        .modal-footer { padding: 20px; border-top: 1px solid #ecf0f1; display: flex; justify-content: flex-end; gap: 10px; }
+        .instructions {
+            background: #eaf4fd;
+            border-left: 4px solid #3498db;
+            padding: 15px 20px;
+            border-radius: 0 6px 6px 0;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+        .instructions strong { color: #2c3e50; }
+    </style>
 </head>
 <body>
-    <!-- ログイン画面 -->
-    <div id="loginSection" class="login-section">
-        <div class="login-box">
-            <h1>管理画面ログイン</h1>
-            <form id="loginForm">
-                <input type="password" id="passwordInput" placeholder="パスワードを入力" required>
-                <button type="submit">ログイン</button>
-            </form>
-            <p class="error-message" id="loginError"></p>
-            <a href="index.html" class="back-link">ホームに戻る</a>
-        </div>
-    </div>
 
-    <!-- 管理画面メイン -->
-    <div id="adminSection" class="admin-section" style="display: none;">
-        <header>
-            <div class="container">
-                <h1>管理画面</h1>
-                <div class="admin-header-buttons">
-                    <a href="index.html" class="button">サイトを表示</a>
-                    <button id="logoutButton" class="button button-secondary">ログアウト</button>
+<!-- ログイン画面 -->
+<div id="loginSection" class="login-section">
+    <div class="login-box">
+        <h1>管理画面ログイン</h1>
+        <form id="loginForm">
+            <input type="password" id="passwordInput" placeholder="パスワードを入力" required>
+            <button type="submit">ログイン</button>
+        </form>
+        <p class="error-message" id="loginError"></p>
+        <a href="index.html" class="back-link">ホームに戻る</a>
+    </div>
+</div>
+
+<!-- 管理画面メイン -->
+<div id="adminSection" class="admin-section" style="display: none;">
+    <header>
+        <div class="container">
+            <h1><i class="fas fa-cog"></i> 管理画面</h1>
+            <div class="admin-header-buttons">
+                <a href="index.html" class="button">サイトを表示</a>
+                <button id="logoutButton" class="button button-secondary">ログアウト</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+
+            <div class="instructions">
+                <strong>📋 使い方：</strong><br>
+                1. 作品を選んで「編集」ボタンをクリック → 画像URLやキャプションを修正<br>
+                2. 「保存してJSを生成」ボタンを押す → 下部に新しい <code>works-data.js</code> の内容が表示される<br>
+                3. 「コピー」ボタンでコピー → <code>js/works-data.js</code> に貼り付けて保存<br>
+                4. GitHub Desktopで「Commit → Push」して反映完了
+            </div>
+
+            <!-- タブ -->
+            <div class="admin-tabs">
+                <button class="tab-button active" data-tab="works">作品管理</button>
+                <button class="tab-button" data-tab="output">JS出力</button>
+            </div>
+
+            <!-- 作品管理タブ -->
+            <div id="worksTab" class="tab-content active">
+                <div class="admin-toolbar">
+                    <button id="addNewWork" class="button button-primary">
+                        <i class="fas fa-plus"></i> 新規作品追加
+                    </button>
+                </div>
+                <input type="text" class="search-box" id="searchBox" placeholder="🔍 作品名で検索...">
+                <div id="worksList" class="works-list"></div>
+            </div>
+
+            <!-- JS出力タブ -->
+            <div id="outputTab" class="tab-content">
+                <div class="output-section">
+                    <p style="margin-bottom:10px; color:#bdc3c7;">「保存してJSを生成」を押すと、ここに更新済みの works-data.js 内容が表示されます。</p>
+                    <textarea id="jsOutput" readonly placeholder="ここにJSコードが生成されます..."></textarea>
+                    <div style="display:flex; align-items:center;">
+                        <button class="copy-btn" id="copyBtn"><i class="fas fa-copy"></i> コピー</button>
+                        <span class="copy-success" id="copySuccess" style="display:none;">✅ コピーしました！</span>
+                    </div>
+                </div>
+                <div class="instructions" style="margin-top:20px;">
+                    <strong>次の手順：</strong><br>
+                    1. 上のコードを全選択してコピー<br>
+                    2. PCの <code>ドキュメント\GitHub\tony-model-gallery\js\works-data.js</code> をメモ帳等で開いて全置換して保存<br>
+                    3. GitHub Desktopで変更を確認 → Commit → Push origin
                 </div>
             </div>
-        </header>
 
-        <main>
-            <div class="container">
-                <!-- タブナビゲーション -->
-                <div class="admin-tabs">
-                    <button class="tab-button active" data-tab="works">作品管理</button>
-                    <button class="tab-button" data-tab="comments">コメント管理</button>
-                </div>
+        </div>
+    </main>
+</div>
 
-                <!-- 作品管理タブ -->
-                <div id="worksTab" class="tab-content active">
-                    <div class="admin-toolbar">
-                        <button id="addNewWork" class="button button-primary">
-                            <i class="fas fa-plus"></i>
-                            新規作品追加
+<!-- 作品編集モーダル -->
+<div id="workModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 id="modalTitle">作品編集</h2>
+            <button class="modal-close" id="closeModal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <input type="hidden" id="workId">
+
+            <div class="form-group">
+                <label>作品タイトル *</label>
+                <input type="text" id="workTitleInput" required>
+            </div>
+
+            <div class="form-group">
+                <label>ジャンル *</label>
+                <select id="workGenre" required>
+                    <option value="aircraft">飛行機モデル</option>
+                    <option value="afv">AFVモデル</option>
+                    <option value="ship">艦船モデル</option>
+                    <option value="robot">ロボット・SFモデル</option>
+                    <option value="other">その他モデル</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>完成年月</label>
+                <input type="text" id="workCompletedDate" placeholder="例: 2023年3月完成">
+            </div>
+
+            <div class="form-group">
+                <label>メイン画像URL *</label>
+                <input type="text" id="workMainImage" placeholder="https://i.imgur.com/XXXXXXX.jpg">
+                <img id="mainImgPreview" class="img-preview-large" src="" alt="" style="display:none;">
+            </div>
+
+            <div class="form-group">
+                <label>作品説明 *</label>
+                <textarea id="workDescription" rows="3"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>詳細説明文</label>
+                <textarea id="workDetailText" rows="5"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>追加画像</label>
+                <div id="additionalImagesContainer"></div>
+                <button type="button" class="btn-add-img" id="addImageBtn">
+                    <i class="fas fa-plus"></i> 画像を追加
+                </button>
+            </div>
+
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="workIsNew"> 新着として表示
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label>表示順序</label>
+                <input type="number" id="workSortOrder" value="0">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" id="deleteWork" class="button button-danger">
+                <i class="fas fa-trash"></i> 削除
+            </button>
+            <button type="button" id="saveWork" class="button button-primary">
+                <i class="fas fa-save"></i> 保存してJSを生成
+            </button>
+        </div>
+    </div>
+</div>
+
+<script src="js/works-data.js"></script>
+<script>
+// ===== 設定 =====
+const ADMIN_PASSWORD = 'model2024';
+
+// ===== 状態管理 =====
+let worksData = [];
+let editingIndex = -1;
+
+// ===== 初期化 =====
+document.addEventListener('DOMContentLoaded', () => {
+    // ログイン状態確認
+    if (sessionStorage.getItem('adminLoggedIn') === 'true') {
+        showAdmin();
+    }
+
+    // works-data.jsからデータ読込
+    if (window.worksData) {
+        worksData = JSON.parse(JSON.stringify(window.worksData));
+    }
+
+    // イベント設定
+    document.getElementById('loginForm').addEventListener('submit', handleLogin);
+    document.getElementById('logoutButton').addEventListener('click', handleLogout);
+    document.getElementById('addNewWork').addEventListener('click', openNewWorkModal);
+    document.getElementById('closeModal').addEventListener('click', closeModal);
+    document.getElementById('saveWork').addEventListener('click', saveWork);
+    document.getElementById('deleteWork').addEventListener('click', deleteWork);
+    document.getElementById('addImageBtn').addEventListener('click', addImageRow);
+    document.getElementById('copyBtn').addEventListener('click', copyOutput);
+    document.getElementById('searchBox').addEventListener('input', renderWorksList);
+    document.getElementById('workMainImage').addEventListener('input', previewMainImage);
+
+    // タブ切替
+    document.querySelectorAll('.tab-button').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            btn.classList.add('active');
+            document.getElementById(btn.dataset.tab + 'Tab').classList.add('active');
+        });
+    });
+
+    // モーダル外クリックで閉じる
+    document.getElementById('workModal').addEventListener('click', (e) => {
+        if (e.target === document.getElementById('workModal')) closeModal();
+    });
+});
+
+// ===== ログイン =====
+function handleLogin(e) {
+    e.preventDefault();
+    const pw = document.getElementById('passwordInput').value;
+    if (pw === ADMIN_PASSWORD) {
+        sessionStorage.setItem('adminLoggedIn', 'true');
+        showAdmin();
+    } else {
+        document.getElementById('loginError').textContent = 'パスワードが違います';
+    }
+}
+
+function handleLogout() {
+    sessionStorage.removeItem('adminLoggedIn');
+    document.getElementById('loginSection').style.display = 'flex';
+    document.getElementById('adminSection').style.display = 'none';
+}
+
+function showAdmin() {
+    document.getElementById('loginSection').style.display = 'none';
+    document.getElementById('adminSection').style.display = 'block';
+    renderWorksList();
+}
+
+// ===== 作品一覧レンダリング =====
+const genreNames = { aircraft: '飛行機', afv: 'AFV', ship: '艦船', robot: 'ロボット', other: 'その他' };
+
+function renderWorksList() {
+    const query = document.getElementById('searchBox').value.toLowerCase();
+    const list = document.getElementById('worksList');
+    list.innerHTML = '';
+
+    worksData
+        .filter(w => w.title.toLowerCase().includes(query))
+        .forEach((work, idx) => {
+            const realIdx = worksData.indexOf(work);
+            const div = document.createElement('div');
+            div.className = 'work-item';
+            div.innerHTML = `
+                <img src="${escHtml(work.main_image)}" alt="${escHtml(work.title)}"
+                     onerror="this.src='https://via.placeholder.com/120x80?text=NoImg'">
+                <div class="work-item-info">
+                    <h3>${escHtml(work.title)}
+                        <span class="genre-badge badge-${work.genre}">${genreNames[work.genre] || work.genre}</span>
+                        ${work.is_new ? '<span class="work-item-badge">NEW</span>' : ''}
+                    </h3>
+                    <p>${escHtml(work.completed_date || '完成日不明')} ／ 追加画像: ${(work.additional_images || []).length}枚</p>
+                    <div class="work-item-actions">
+                        <button class="btn-edit" onclick="openEditModal(${realIdx})">
+                            <i class="fas fa-edit"></i> 編集
                         </button>
                     </div>
-
-                    <div id="worksList" class="works-list">
-                        <!-- JavaScriptで動的に生成 -->
-                    </div>
                 </div>
+            `;
+            list.appendChild(div);
+        });
+}
 
-                <!-- コメント管理タブ -->
-                <div id="commentsTab" class="tab-content">
-                    <div id="adminCommentsList" class="admin-comments-list">
-                        <!-- JavaScriptで動的に生成 -->
-                    </div>
-                </div>
-            </div>
-        </main>
-    </div>
+// ===== モーダル操作 =====
+function openEditModal(idx) {
+    editingIndex = idx;
+    const work = worksData[idx];
+    document.getElementById('modalTitle').textContent = '作品編集：' + work.title;
+    document.getElementById('workId').value = work.id || '';
+    document.getElementById('workTitleInput').value = work.title || '';
+    document.getElementById('workGenre').value = work.genre || 'aircraft';
+    document.getElementById('workCompletedDate').value = work.completed_date || '';
+    document.getElementById('workMainImage').value = work.main_image || '';
+    document.getElementById('workDescription').value = work.description || '';
+    document.getElementById('workDetailText').value = work.detail_text || '';
+    document.getElementById('workIsNew').checked = !!work.is_new;
+    document.getElementById('workSortOrder').value = work.sort_order || 0;
+    document.getElementById('deleteWork').style.display = 'inline-block';
 
-    <!-- 作品編集モーダル -->
-    <div id="workModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 id="modalTitle">作品編集</h2>
-                <button class="modal-close" id="closeModal">&times;</button>
-            </div>
-            <form id="workForm">
-                <input type="hidden" id="workId">
-                
-                <div class="form-group">
-                    <label>作品タイトル *</label>
-                    <input type="text" id="workTitleInput" required>
-                </div>
+    // メイン画像プレビュー
+    previewMainImage();
 
-                <div class="form-group">
-                    <label>ジャンル *</label>
-                    <select id="workGenre" required>
-                        <option value="aircraft">飛行機モデル</option>
-                        <option value="afv">AFVモデル</option>
-                        <option value="ship">艦船モデル</option>
-                        <option value="robot">ロボット・SFモデル</option>
-                        <option value="other">その他モデル</option>
-                    </select>
-                </div>
+    // 追加画像
+    renderAdditionalImages(work.additional_images || []);
 
-                <div class="form-group">
-                    <label>完成年月</label>
-                    <input type="text" id="workCompletedDate" placeholder="例: 2023年3月">
-                </div>
+    document.getElementById('workModal').classList.add('active');
+}
 
-                <div class="form-group">
-                    <label>メイン画像URL *</label>
-                    <input type="url" id="workMainImage" required placeholder="https://...">
-                    <small>画像のURLを入力してください</small>
-                </div>
+function openNewWorkModal() {
+    editingIndex = -1;
+    document.getElementById('modalTitle').textContent = '新規作品追加';
+    document.getElementById('workId').value = generateId();
+    document.getElementById('workTitleInput').value = '';
+    document.getElementById('workGenre').value = 'aircraft';
+    document.getElementById('workCompletedDate').value = '';
+    document.getElementById('workMainImage').value = '';
+    document.getElementById('workDescription').value = '';
+    document.getElementById('workDetailText').value = '';
+    document.getElementById('workIsNew').checked = false;
+    document.getElementById('workSortOrder').value = 0;
+    document.getElementById('deleteWork').style.display = 'none';
+    document.getElementById('mainImgPreview').style.display = 'none';
+    renderAdditionalImages([]);
+    document.getElementById('workModal').classList.add('active');
+}
 
-                <div class="form-group">
-                    <label>作品説明 *</label>
-                    <textarea id="workDescription" rows="3" required></textarea>
-                </div>
+function closeModal() {
+    document.getElementById('workModal').classList.remove('active');
+}
 
-                <div class="form-group">
-                    <label>詳細説明文</label>
-                    <textarea id="workDetailText" rows="5"></textarea>
-                </div>
+// ===== 追加画像UI =====
+function renderAdditionalImages(images) {
+    const container = document.getElementById('additionalImagesContainer');
+    container.innerHTML = '';
+    images.forEach((img, i) => addImageRow(img));
+}
 
-                <div class="form-group">
-                    <label>追加画像（JSON形式）</label>
-                    <textarea id="workAdditionalImages" rows="5" placeholder='[{"url": "https://...", "caption": "説明文"}]'></textarea>
-                    <small>形式: [{"url": "画像URL", "caption": "キャプション"}]</small>
-                </div>
-
-                <div class="form-group">
-                    <label>
-                        <input type="checkbox" id="workIsNew">
-                        新着として表示
-                    </label>
-                </div>
-
-                <div class="form-group">
-                    <label>表示順序</label>
-                    <input type="number" id="workSortOrder" value="0">
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" id="deleteWork" class="button button-danger">削除</button>
-                    <button type="submit" class="button button-primary">保存</button>
-                </div>
-            </form>
+function addImageRow(imgData) {
+    const container = document.getElementById('additionalImagesContainer');
+    const url = (imgData && imgData.url) ? imgData.url : '';
+    const caption = (imgData && imgData.caption) ? imgData.caption : '';
+    const row = document.createElement('div');
+    row.className = 'additional-img-row';
+    row.innerHTML = `
+        <img src="${escHtml(url)}" alt=""
+             onerror="this.src='https://via.placeholder.com/100x70?text=NoImg'"
+             style="width:100px;height:70px;object-fit:cover;border-radius:4px;flex-shrink:0;">
+        <div class="img-inputs">
+            <input type="text" placeholder="画像URL (https://i.imgur.com/XXXXXXX.jpg)"
+                   value="${escHtml(url)}" class="img-url-input"
+                   oninput="updateImgPreview(this)">
+            <textarea placeholder="キャプション（説明文）" class="img-caption-input">${escHtml(caption)}</textarea>
         </div>
-    </div>
+        <button class="btn-remove-img" onclick="this.parentElement.remove()">✕</button>
+    `;
+    container.appendChild(row);
+}
 
-    <script src="js/admin.js"></script>
+function updateImgPreview(input) {
+    const img = input.parentElement.parentElement.querySelector('img');
+    img.src = input.value || 'https://via.placeholder.com/100x70?text=NoImg';
+}
+
+function previewMainImage() {
+    const url = document.getElementById('workMainImage').value;
+    const preview = document.getElementById('mainImgPreview');
+    if (url) {
+        preview.src = url;
+        preview.style.display = 'block';
+    } else {
+        preview.style.display = 'none';
+    }
+}
+
+// ===== 保存・削除 =====
+function saveWork() {
+    const title = document.getElementById('workTitleInput').value.trim();
+    if (!title) { alert('タイトルを入力してください'); return; }
+    const mainImg = document.getElementById('workMainImage').value.trim();
+    if (!mainImg) { alert('メイン画像URLを入力してください'); return; }
+
+    // 追加画像収集
+    const additionalImages = [];
+    document.querySelectorAll('.additional-img-row').forEach(row => {
+        const url = row.querySelector('.img-url-input').value.trim();
+        const caption = row.querySelector('.img-caption-input').value.trim();
+        if (url) additionalImages.push({ url, caption });
+    });
+
+    const work = {
+        id: document.getElementById('workId').value || generateId(),
+        title,
+        genre: document.getElementById('workGenre').value,
+        completed_date: document.getElementById('workCompletedDate').value.trim(),
+        main_image: mainImg,
+        description: document.getElementById('workDescription').value.trim(),
+        detail_text: document.getElementById('workDetailText').value.trim(),
+        additional_images: additionalImages,
+        likes: editingIndex >= 0 ? (worksData[editingIndex].likes || 0) : 0,
+        is_new: document.getElementById('workIsNew').checked ? 1 : 0,
+        sort_order: parseInt(document.getElementById('workSortOrder').value) || 0
+    };
+
+    if (editingIndex >= 0) {
+        worksData[editingIndex] = work;
+    } else {
+        worksData.unshift(work);
+    }
+
+    closeModal();
+    renderWorksList();
+    generateOutput();
+
+    // JS出力タブへ自動切替
+    document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    document.querySelector('[data-tab="output"]').classList.add('active');
+    document.getElementById('outputTab').classList.add('active');
+
+    alert('✅ 保存しました！「JS出力」タブのコードをコピーして works-data.js に貼り付けてください。');
+}
+
+function deleteWork() {
+    if (editingIndex < 0) return;
+    const title = worksData[editingIndex].title;
+    if (!confirm(`「${title}」を削除しますか？`)) return;
+    worksData.splice(editingIndex, 1);
+    closeModal();
+    renderWorksList();
+    generateOutput();
+    alert('削除しました。JS出力タブのコードを反映してください。');
+}
+
+// ===== JS生成・コピー =====
+function generateOutput() {
+    const json = JSON.stringify(worksData, null, 2);
+    const js = `window.worksData = ${json};\n`;
+    document.getElementById('jsOutput').value = js;
+}
+
+function copyOutput() {
+    const ta = document.getElementById('jsOutput');
+    if (!ta.value) {
+        alert('先に作品を編集・保存してJSを生成してください。');
+        return;
+    }
+    ta.select();
+    document.execCommand('copy');
+    const msg = document.getElementById('copySuccess');
+    msg.style.display = 'inline';
+    setTimeout(() => { msg.style.display = 'none'; }, 3000);
+}
+
+// ===== ユーティリティ =====
+function generateId() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+        const r = Math.random() * 16 | 0;
+        return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+    });
+}
+
+function escHtml(str) {
+    if (!str) return '';
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+}
+</script>
 </body>
 </html>
