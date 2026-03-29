@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# 管理画面はクロール不要
+Disallow: /admin.html
+
+# サイトマップの場所
+Sitemap: https://tony-models.com/sitemap.xml
