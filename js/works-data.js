@@ -163,7 +163,7 @@ window.worksData = [
     ],
     "likes": 0,
     "is_new": 0,
-    "sort_order": 1
+    "sort_order": 2
   },
   {
     "id": "4a2f1e25-fe6b-481e-92a4-bf25528d8a53",
