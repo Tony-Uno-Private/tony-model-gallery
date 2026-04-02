@@ -70,7 +70,7 @@ function displayWork(work) {
         const additionalImagesHtml = work.additional_images.map(img => `
             <div class="additional-image-item">
                 <img src="${img.url}" alt="${img.caption || work.title}">
-                <p>${(img.caption || '').replace(/\\n/g, '<br>').replace(/\n/g, '<br>')}</p>
+                <p>${(img.caption || '').split('\n').join('<br>')}</p>
             </div>
         `).join('');
         
