@@ -454,8 +454,9 @@ function openEditModal(idx) {
     document.getElementById('workGenre').value = work.genre || 'aircraft';
     document.getElementById('workCompletedDate').value = work.completed_date || '';
     document.getElementById('workMainImage').value = work.main_image || '';
-    document.getElementById('workDescription').value = work.description || '';
-    document.getElementById('workDetailText').value = work.detail_text || '';
+    // \nを実際の改行に変換してtextareaに表示
+    document.getElementById('workDescription').value = (work.description || '').replace(/\n/g, '\n');
+    document.getElementById('workDetailText').value = (work.detail_text || '').replace(/\n/g, '\n');
     document.getElementById('workIsNew').checked = !!work.is_new;
     document.getElementById('workSortOrder').value = work.sort_order || 0;
     document.getElementById('deleteWork').style.display = 'inline-block';
@@ -501,7 +502,8 @@ function renderAdditionalImages(images) {
 function addImageRow(imgData) {
     const container = document.getElementById('additionalImagesContainer');
     const url = (imgData && imgData.url) ? imgData.url : '';
-    const caption = (imgData && imgData.caption) ? imgData.caption : '';
+    // \nを実際の改行に変換してtextareaに表示
+    const caption = (imgData && imgData.caption) ? imgData.caption.replace(/\n/g, '\n') : '';
     const row = document.createElement('div');
     row.className = 'additional-img-row';
     row.innerHTML = `
@@ -546,7 +548,11 @@ function saveWork() {
     const additionalImages = [];
     document.querySelectorAll('.additional-img-row').forEach(row => {
         const url = row.querySelector('.img-url-input').value.trim();
-        const caption = row.querySelector('.img-caption-input').value.trim();
+        // textareaの実際の改行を\nエスケープに変換（JSON安全）
+        const caption = row.querySelector('.img-caption-input').value
+            .replace(/\r\n/g, '\n')
+            .replace(/\r/g, '\n')
+            .trim();
         if (url) additionalImages.push({ url, caption });
     });
 
@@ -556,8 +562,10 @@ function saveWork() {
         genre: document.getElementById('workGenre').value,
         completed_date: document.getElementById('workCompletedDate').value.trim(),
         main_image: mainImg,
-        description: document.getElementById('workDescription').value.trim(),
-        detail_text: document.getElementById('workDetailText').value.trim(),
+        description: document.getElementById('workDescription').value
+            .replace(/\r\n/g, '\n').replace(/\r/g, '\n').trim(),
+        detail_text: document.getElementById('workDetailText').value
+            .replace(/\r\n/g, '\n').replace(/\r/g, '\n').trim(),
         additional_images: additionalImages,
         likes: editingIndex >= 0 ? (worksData[editingIndex].likes || 0) : 0,
         is_new: document.getElementById('workIsNew').checked ? 1 : 0,
