@@ -88,7 +88,7 @@ window.worksData = [
       }
     ],
     "likes": 0,
-    "is_new": 0,
+    "is_new": 1,
     "sort_order": 1
   },
   {
@@ -562,7 +562,7 @@ window.worksData = [
       }
     ],
     "likes": 0,
-    "is_new": 0,
+    "is_new": 1,
     "sort_order": 1
   },
   {
@@ -810,7 +810,7 @@ window.worksData = [
       }
     ],
     "likes": 0,
-    "is_new": 0,
+    "is_new": 1,
     "sort_order": 1
   },
   {
@@ -896,7 +896,7 @@ window.worksData = [
       }
     ],
     "likes": 0,
-    "is_new": 0,
+    "is_new": 1,
     "sort_order": 1
   },
   {
@@ -1034,7 +1034,7 @@ window.worksData = [
       }
     ],
     "likes": 0,
-    "is_new": 0,
+    "is_new": 1,
     "sort_order": 1
   }
 ];
