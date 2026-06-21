@@ -563,6 +563,10 @@ window.worksData = [
       {
         "url": "https://i.imgur.com/GAIXuKV.jpg",
         "caption": "このキット、初期の黒瓦バージョンと現在の赤瓦バージョンに加え、ゲーム「城姫クエスト」オリジナルパッケージ版(ステッカーと缶バッジ付き)が存在したのですね。下の娘のために清水寺のキットを買いに行った際、そんなものもあったのかと知りました。鶴ヶ城（会津若松城）は、そのゲームのキービジュアルのセンターを飾るメインキャラのようです。やっぱゲームプレイで落城すると、半裸になったりするのでしょうか。もっと早く知っていれば、城姫フィギュアも作ってコッソリ混ぜていたところですが、残念。"
+      },
+      {
+        "url": "https://i.imgur.com/YfwcHdZ.jpg",
+        "caption": "というわけで、その「たら、れば」を画像だけでも生成してみました。"
       }
     ],
     "likes": 0,
@@ -968,7 +972,7 @@ window.worksData = [
       },
       {
         "url": "https://i.imgur.com/b4ZA5Q6.jpg",
-        "caption": "Schneller!!  Schneller!!!"
+        "caption": "Schneller!!   Schneller!!!"
       }
     ],
     "likes": 0,
