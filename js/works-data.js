@@ -162,7 +162,7 @@ window.worksData = [
       },
       {
         "url": "https://i.imgur.com/4IYu7KJ.jpg",
-        "caption": "清水寺と言えば舞台、部隊と言えば、ライブステージ。"
+        "caption": "清水寺と言えば舞台、舞台と言えば、ライブステージ。"
       }
     ],
     "likes": 0,
