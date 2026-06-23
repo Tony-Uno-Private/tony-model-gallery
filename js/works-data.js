@@ -819,6 +819,10 @@ window.worksData = [
       {
         "url": "https://i.imgur.com/CSHf2vV.jpg",
         "caption": "船底には重しを詰め込んでおり、実はこのフネ、浮くんです！（爆）"
+      },
+      {
+        "url": "https://i.imgur.com/K1ucro7.jpg",
+        "caption": "\"Rudder amidships!!\""
       }
     ],
     "likes": 0,
