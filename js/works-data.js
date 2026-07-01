@@ -290,7 +290,7 @@ window.worksData = [
       },
       {
         "url": "https://i.imgur.com/NzstCcZ.jpg",
-        "caption": "「お前はもう死んでいる。」\n勝てる！これならM4シャーマンにも勝てる！！"
+        "caption": "「お前はもう死んでいる。」\n勝てる！これならM4シャーマンにも勝てる！！ 戦車無くても勝てる！！！"
       },
       {
         "url": "https://i.imgur.com/aPuWRqb.jpg",
