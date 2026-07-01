@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>全作品一覧 | 余暇が出来たので模型製作を再開した件</title>
+    <meta name="description" content="プラモデル・AFV・飛行機模型・艦船模型・ロボット模型など全31作品の一覧です。各作品の製作記録・塗装技法・詳細写真をご覧いただけます。">
+    <meta name="keywords" content="プラモデル一覧,スケールモデル,AFV,飛行機模型,艦船模型,ミリタリーモデル,模型製作,ガンプラ,タイガーI,F-15J,紫電改,雷電,T-34,鶴ヶ城,清水寺">
+    <link rel="canonical" href="https://tony-models.com/works.html">
+
+    <!-- OGP -->
+    <meta property="og:title" content="全作品一覧 | 余暇が出来たので模型製作を再開した件">
+    <meta property="og:description" content="プラモデル・AFV・飛行機模型・艦船模型など全31作品の一覧">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tony-models.com/works.html">
+    <meta property="og:image" content="https://i.imgur.com/3Aaj4hP.jpg">
+    <meta property="og:site_name" content="余暇が出来たので模型製作を再開した件">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@uno_qu_tony">
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ===== works.html 専用スタイル ===== */
+        .breadcrumb {
+            background: var(--white);
+            border-bottom: 1px solid var(--gray-light);
+            padding: 10px 0;
+            font-size: 0.85rem;
+            color: var(--gray-dark);
+        }
+        .breadcrumb a {
+            color: var(--secondary-color);
+            text-decoration: none;
+        }
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        .breadcrumb span {
+            margin: 0 6px;
+            color: var(--gray);
+        }
+
+        /* ページヘッダー */
+        .page-header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #1a252f 100%);
+            color: var(--white);
+            padding: 48px 0 40px;
+            text-align: center;
+        }
+        .page-header h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .page-header p {
+            font-size: 1rem;
+            opacity: 0.85;
+        }
+        .works-count-badge {
+            display: inline-block;
+            background: var(--accent-color);
+            color: var(--white);
+            font-size: 0.85rem;
+            font-weight: 700;
+            padding: 3px 12px;
+            border-radius: 20px;
+            margin-top: 10px;
+        }
+
+        /* ジャンルフィルターボタン */
+        .filter-section {
+            background: var(--white);
+            border-bottom: 1px solid var(--gray-light);
+            padding: 16px 0;
+            position: sticky;
+            top: 80px;
+            z-index: 50;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+        }
+        .filter-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+        }
+        .filter-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 7px 18px;
+            border: 2px solid var(--gray-light);
+            border-radius: 24px;
+            background: var(--white);
+            color: var(--gray-dark);
+            font-size: 0.88rem;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s;
+            font-family: 'Noto Sans JP', sans-serif;
+        }
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+            color: var(--white);
+        }
+        .filter-btn i {
+            font-size: 0.9rem;
+        }
+
+        /* ===== ジャンルセクション ===== */
+        .works-main {
+            padding: 40px 0 60px;
+        }
+        .genre-section {
+            margin-bottom: 56px;
+        }
+        .genre-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 3px solid var(--primary-color);
+        }
+        .genre-header i {
+            font-size: 1.4rem;
+            color: var(--secondary-color);
+        }
+        .genre-header h2 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        .genre-count {
+            margin-left: auto;
+            font-size: 0.82rem;
+            color: var(--gray-dark);
+            background: var(--gray-light);
+            padding: 2px 10px;
+            border-radius: 12px;
+        }
+
+        /* 作品カード グリッド */
+        .works-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        /* 作品カード */
+        .work-card {
+            display: block;
+            background: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .work-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+        }
+        .work-card-img {
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            object-fit: cover;
+            display: block;
+            background: var(--gray-light);
+        }
+        .work-card-body {
+            padding: 14px 16px 16px;
+        }
+        .work-card-title {
+            font-size: 0.97rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 6px;
+            line-height: 1.4;
+        }
+        .work-card-desc {
+            font-size: 0.8rem;
+            color: var(--gray-dark);
+            line-height: 1.5;
+            margin-bottom: 10px;
+            /* 2行までクランプ */
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .work-card-meta {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.78rem;
+            color: var(--gray);
+        }
+        .work-card-meta i {
+            font-size: 0.75rem;
+        }
+
+        /* ページトップへ */
+        .back-to-top {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: var(--primary-color);
+            color: var(--white);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+            font-size: 1.1rem;
+            transition: background 0.2s, transform 0.2s;
+            opacity: 0;
+            pointer-events: none;
+        }
+        .back-to-top.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .back-to-top:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        /* ジャンルセクションの表示/非表示 */
+        .genre-section.hidden {
+            display: none;
+        }
+
+        /* レスポンシブ */
+        @media (max-width: 600px) {
+            .page-header h2 { font-size: 1.5rem; }
+            .works-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+            .work-card-body { padding: 10px 12px 12px; }
+            .work-card-title { font-size: 0.88rem; }
+            .work-card-desc { display: none; }
+            .genre-header h2 { font-size: 1.15rem; }
+            .filter-btn { font-size: 0.8rem; padding: 6px 12px; }
+        }
+        @media (max-width: 380px) {
+            .works-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <h1 class="site-title">
+                <a href="index.html" style="color: inherit; text-decoration: none;">余暇が出来たので模型製作を再開した件</a>
+            </h1>
+            <p class="site-subtitle">プラモデル・AFV・飛行機模型の製作記録</p>
+        </div>
+    </header>
+
+    <!-- パンくずリスト -->
+    <nav class="breadcrumb" aria-label="パンくずリスト">
+        <div class="container">
+            <a href="index.html"><i class="fas fa-home"></i> トップ</a>
+            <span>›</span>
+            <strong>全作品一覧</strong>
+        </div>
+    </nav>
+
+    <main>
+        <!-- ページヘッダー -->
+        <div class="page-header">
+            <div class="container">
+                <h2><i class="fas fa-list"></i> 全作品一覧</h2>
+                <p>飛行機・AFV・艦船・ロボット・建物など、全ジャンルの作品を掲載しています</p>
+                <span class="works-count-badge">全31作品</span>
+            </div>
+        </div>
+
+        <!-- ジャンルフィルター -->
+        <div class="filter-section">
+            <div class="container">
+                <div class="filter-buttons" role="group" aria-label="ジャンル絞り込み">
+                    <button class="filter-btn active" data-filter="all">
+                        <i class="fas fa-th"></i> すべて
+                    </button>
+                    <button class="filter-btn" data-filter="aircraft">
+                        <i class="fas fa-plane"></i> 飛行機
+                    </button>
+                    <button class="filter-btn" data-filter="afv">
+                        <i class="fas fa-shield-alt"></i> AFV
+                    </button>
+                    <button class="filter-btn" data-filter="ship">
+                        <i class="fas fa-ship"></i> 艦船
+                    </button>
+                    <button class="filter-btn" data-filter="robot">
+                        <i class="fas fa-robot"></i> ロボット
+                    </button>
+                    <button class="filter-btn" data-filter="other">
+                        <i class="fas fa-shapes"></i> その他
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="works-main">
+            <div class="container">
+
+                <!-- ===== 飛行機モデル ===== -->
+                <section class="genre-section" id="section-aircraft" data-genre="aircraft">
+                    <header class="genre-header">
+                        <i class="fas fa-plane"></i>
+                        <h2>飛行機モデル</h2>
+                        <span class="genre-count">15作品</span>
+                    </header>
+                    <div class="works-grid">
+
+                        <a class="work-card" href="work.html?id=dd73d5db-f8d6-4dac-8d46-86bb65e37bbf">
+                            <img class="work-card-img" src="https://i.imgur.com/fjWdl5K.jpg" alt="1/48 雷電21型" loading="lazy">
+                            <div class="work-card-body">
+                                <p class="work-card-title">1/48 雷電21型</p>
+                                <p class="work-card-desc">1945年 第352海軍航空隊　搭乗員不明の小隊長機</p>
+                                <p class="work-card-meta"><i class="far fa-calendar-alt"></i> 2024年5月完成</p>
+                            </div>
+                        </a>
+
+                        <a class="work-card" href="work.html?id=38dd2f8b-c68c-4027-b965-f5315cce7590">
+                            <img class="work-card-img" src="https://i.imgur.com/2dhWmAk.jpg" alt="1/48 紫電21型 紫電改 前期生産機" loading="lazy">
+                            <div class="work-card-body">
+                                <p class="work-card-title">1/48 紫電21型 紫電改 前期生産機</p>
+                                <p class="work-card-desc">第343海軍航空隊 戦闘301飛行隊隊長機「菅野一番」</p>
+                                <p class="work-card-meta"><i class="far fa-calendar-alt"></i> 2024年7月完成</p>
+                            </div>
+                        </a>
+
+                        <a class="work-card" href="work.html?id=ca104af7-7229-4562-9fb7-436d753f572b">
+                            <img class="work-card-img" src="https://i.imgur.com/rSJetn2.jpg" alt="1/48 紫電11型甲" loading="lazy">
+                            <div class="work-card-body">
+                                <p class="work-card-title">1/48 紫電11型甲</p>
+                                <p class="work-card-desc">第341航空隊 戦闘701飛行隊機　1944年 フィリピン クラーク基地</p>
+                                <p class="work-card-meta"><i class="far fa-calendar-alt"></i> 2024年7月完成</p>
+                            </div>
+                        </a>
+
+                        <a class="work-card" href="work.html?id=4ee09bcc-6dc0-4685-b1b4-050ec5e94116">
+                            <img class="work-card-img" src="https://i.imgur.com/6RfG1n0.jpg" alt="1/48 零式艦上戦闘機 五二丙型" loading="lazy">
+                            <div class="work-card-body">
+                                <p class="work-card-title">1/48 零式艦上戦闘機 五二丙型</p>
+                                <p class="work-card-desc">1945年 第203海軍航空隊 谷水上飛曹搭乗機</p>
+                                <p class="work-card-meta"><i class="far fa-calendar-alt"></i> 2024年9月完成</p>
+                            </div>
+                        </a>
+
+                        <a class="work-card" href="work.html?id=4a2f1e25-fe6b-481e-92a4-bf25528d8a53">
+                            <img class="work-card-img" src="https://i.imgur.com/I8Hd7Ns.jpg" alt="1/72 F-5E タイガーII" loading="lazy">
+                            <div class="work-card-body">
+                                <p class="work-card-title">1/72 F-5E タイガーII</p>
+                                <p class="work-card-desc">スイス空軍 第19飛行隊 J-3031号機 1980年</p>
+                                <p class="work-card-meta"><i class="far fa-calendar-alt"></i> 2024年10月完成</p>
+                            </div>
+                        </a>
+
+                        <a class="work-card" href="work.html?id=8c8bfaf0-05a1-4199-8964-2f149cad2aa5">
+                            <img class="work-card-img" src="https://i.imgur.com/L1coSjH.jpg" alt="1/72 F-104J スターファイター" loading="lazy">
+                            <div class="work-card-body">
+                                <p class="work-card-title">1/72 F-104J スターファイター</p>
+                                <p class="work-card-desc">航空自衛隊 第5航空団 第204飛行隊 創設20周年記念塗装機</p>
+                                <p class="work-card-meta"><i class="far fa-calendar-alt"></i> 2024年2月完成</p>
+                            </div>
+                        </a>
+
+                        <a class="work-card" href="work.html?id=8b9c87a3-c8d1-4388-a0c5-814c0722444d">
+                            <img class="work-card-img" src="https://i.imgur.com/NlUDkoi.jpg" alt="1/72 F-104S スターファイター" loading="lazy">
+                            <div class="work-card-body">
+                                <p class="work-card-title">1/72 F-104S スターファイター</p>
+                                <p class="work-card-desc">イタリア空軍 第5航空団 第23飛行中隊機 リミニ空軍基地</p>
+                                <p class="work-card-meta"><i class="far fa-calendar-alt"></i> 2023年12月完成</p>
+                            </div>
+                        </a>
+
+                        <a class="work-card" href="work.html?id=8ff062ed-6f77-4abf-aa60-6b673f89aad8">
+                            <img class="work-card-img" src="https://i.imgur.com/jtHAKdx.jpg" alt="1/72 F-104G スターファイター その2" loading="lazy">
+                            <div class="work-card-body">
+                                <p class="work-card-title">1/72 F-104G スターファイター その2</p>
+                                <p class="work-card-desc">西ドイツ空軍 JBG34戦闘爆撃航空団所属機 1987年</p>
+                                <p class="work-card-meta"><i class="far fa-calendar-alt"></i> 2023年11月完成</p>
+                            </div>
+                        </a>
+
+                        <a class="work-card" href="work.html?id=7a1e0de9-2d38-424a-a427-df2caeefcccc">
+                            <img class="work-card-img" src="https://i.imgur.com/14go0iU.jpg" alt="1/72 F-104G スターファイター その1" loading="lazy">
+                            <div class="work-card-body">
+                                <p class="work-card-title">1/72 F-104G スターファイター その1</p>
+                                <p class="work-card-desc">西ドイツ空軍 JG71戦闘航空団「リヒトホーフェン」所属機 1965年</p>
+                                <p class="work-card-meta"><i class="far fa-calendar-alt"></i> 1994年完成（2023年リペイント）</p>
+                            </div>
+                        </a>
+
+                        <a class="work-card" href="work.html?id=cce2acd7-d86c-4151-85c8-5a6056d5a821">
+                            <img class="work-card-img" src="https://i.imgur.com/WOzTBMJ.jpg" alt="1/72 F-15J" loading="lazy">
+                            <div class="work-card-body">
+                                <p class="work-card-title">1/72 F-15J</p>
+                                <p class="work-card-desc">航空自衛隊 第7航空団 第204飛行隊 836号機 百里基地 1990年</p>
+                                <p class="work-card-meta"><i class="far fa-calendar-alt"></i> 1991年完成（リペイント済）</p>
+                            </div>
+                        </a>
+
+                        <a class="work-card" href="work.html?id=99e4bee6-4f4f-4602-b0c0-a84ea527839b">
+                            <img class="work-card-img" src="https://i.imgur.com/X7lPgRH.jpg" alt="1/72 F-16C" loading="lazy">
+                            <div class="work-card-body">
+                                <p class="work-card-title">1/72 F-16C</p>
+                                <p class="work-card-desc">アメリカ空軍 第363戦術戦闘航空団 第19戦術戦闘飛行隊</p>
+                                <p class="work-card-meta"><i class="far fa-calendar-alt"></i> 1992年完成</p>
+                            </div>
+                        </a>
+
+                        <a class="work-card" href="work.html?id=e447e794-4b60-4311-bfbe-478657e5fdc2">
+                            <img class="work-card-img" src="https://i.imgur.com/4yb2RaD.jpg" alt="1/72 MIG-21 MF" loading="lazy">
+                            <div class="work-card-body">
+                                <p class="work-card-title">1/72 MIG-21 MF</p>
+                                <p class="work-card-desc">インド空軍機　MIG-21の主要輸出型</p>
+                                <p class="work-card-meta"><i class="far fa-calendar-alt"></i> 製作時期不明、35年くらい前</p>
+                            </div>
+                        </a>
+
+                        <a class="work-card" href="work.html?id=5624ed95-f7df-4906-b40b-e97aaf58971a">
+                            <img class="work-card-img" src="https://i.imgur.com/w7GT1qq.jpg" alt="1/72 F-4D ファントムII" loading="lazy">
+                            <div class="work-card-body">
+                                <p class="work-card-title">1/72 F-4D ファントムII</p>
+                                <p class="work-card-desc">1972年8月 ラインバッカー作戦 リッチ大尉&デベルビュー大尉機</p>
+                                <p class="work-card-meta"><i class="far fa-calendar-alt"></i> 製作時期不明、35年以上前</p>
+                            </div>
+                        </a>
+
+                        <a class="work-card" href="work.html?id=e0466d57-c3b7-422f-b56e-b0efb7d56811">
+                            <img class="work-card-img" src="https://i.imgur.com/FdD8rnD.jpg" alt="1/48 メッサーシュミットBf109G-6（バルクホルン機）" loading="lazy">
+                            <div class="work-card-body">
+                                <p class="work-card-title">1/48 Bf109G-6（バルクホルン大尉機）</p>
+                                <p class="work-card-desc">1944年2月 ロシア JG52 ゲルハルト・バルクホルン大尉機 250機撃墤当時</p>
+                                <p class="work-card-meta"><i class="far fa-calendar-alt"></i> 1993年頃完成</p>
+                            </div>
+                        </a>
+
+                        <a class="work-card" href="work.html?id=00f07b3b-6175-4922-bce7-02a11658aab5">
+                            <img class="work-card-img" src="https://i.imgur.com/uBdGyqp.jpg" alt="1/48 メッサーシュミットBf109G-6（ハルトマン機）" loading="lazy">
+                            <div class="work-card-body">
+                                <p class="work-card-title">1/48 Bf109G-6（ハルトマン少尉機）</p>
+                                <p class="work-card-desc">1943年10月 JG52 第III飛行隊 エーリッヒ・ハルトマン少尉機 121機撃墤当時</p>
+                                <p class="work-card-meta"><i class="far fa-calendar-alt"></i> 1993年頃完成</p>
+                            </div>
+                        </a>
+
+                    </div><!-- /.works-grid -->
+                </section><!-- /#section-aircraft -->
+
+                <!-- ===== AFVモデル ===== -->
+                <section class="genre-section" id="section-afv" data-genre="afv">
+                    <header class="genre-header">
+                        <i class="fas fa-shield-alt"></i>
+                        <h2>AFVモデル</h2>
+                        <span class="genre-count">8作品</span>
+                    </header>
+                    <div class="works-grid">
+
+                        <a class="work-card" href="work.html?id=a9a9aead-24d1-4346-9422-ad6b68d4b905">
+                            <img class="work-card-img" src="https://i.imgur.com/02caaoi.jpg" alt="1/35 タイガーI 後期型" loading="lazy">
+                            <div class="work-card-body">
+                                <p class="work-card-title">1/35 タイガーI 後期型</p>
+                                <p class="work-card-desc">1944年7月 ノルマンディー SS第101重戦車大隊第2中隊 ブラントSS軍曹登場車</p>
+                                <p class="work-card-meta"><i class="far fa-calendar-alt"></i> 2024年4月完成</p>
+                            </div>
+                        </a>
+
+                        <a class="work-card" href="work.html?id=ee730ce7-f7f5-402a-9a85-3c9b57986b9f">
+                            <img class="work-card-img" src="https://i.imgur.com/WdH9Fgp.jpg" alt="1/35 T-34-85" loading="lazy">
+                            <div class="work-card-body">
+                                <p class="work-card-title">1/35 T-34-85</p>
+                                <p class="work-card-desc">1944年式 第183番ウラル戦車工場製 1945年4月 オーストリア</p>
+                                <p class="work-card-meta"><i class="far fa-calendar-alt"></i> 2025年3月完成</p>
+                            </div>
+                        </a>
+
+                        <a class="work-card" href="work.html?id=ab0472ff-6ad8-40d4-b86b-11a9169c0d56">
+                            <img class="work-card-img" src="https://i.imgur.com/5yGRZhK.jpg" alt="1/35 T-34-76 1943年式" loading="lazy">
+                            <div class="work-card-body">
+                                <p class="work-card-title">1/35 T-34-76 1943年式</p>
+                                <p class="work-card-desc">スタンダードな六角砲塔の1943年式</p>
+                                <p class="work-card-meta"><i class="far fa-calendar-alt"></i> 2025年10月完成</p>
+                            </div>
+                        </a>
+
+                        <a class="work-card" href="work.html?id=e69e0d53-c9fd-41a3-b1a1-3eb6614f79f4">
+                            <img class="work-card-img" src="https://i.imgur.com/9oyDMGT.jpg" alt="1/35 T-34-76 1942年式" loading="lazy">
+                            <div class="work-card-body">
+                                <p class="work-card-title">1/35 T-34-76 1942年式</p>
+                                <p class="work-card-desc">1942年当時スタンダードな鋳造砲塔車</p>
+                                <p class="work-card-meta"><i class="far fa-calendar-alt"></i> 2025年10月完成</p>
+                            </div>
+                        </a>
+
+                        <a class="work-card" href="work.html?id=43e8b487-b74a-4342-aa10-ca52ce870333">
+                            <img class="work-card-img" src="https://i.imgur.com/Ou0ouDR.jpg" alt="1/35 KV-1 1941年型" loading="lazy">
+                            <div class="work-card-body">
+                                <p class="work-card-title">1/35 KV-1 1941年型</p>
+                                <p class="work-card-desc">31.1口径76.2mm戦車砲F-32装備 溶接砲塔車両</p>
+                                <p class="work-card-meta"><i class="far fa-calendar-alt"></i> 2021年4月完成</p>
+                            </div>
+                        </a>
+
+                        <a class="work-card" href="work.html?id=41ad8a9f-8f1c-4ad4-84f8-9f19ef5ccaf1">
+                            <img class="work-card-img" src="https://i.imgur.com/7bM0Ero.jpg" alt="1/35 KV-1 1942年初期生産型" loading="lazy">
+                            <div class="work-card-body">
+                                <p class="work-card-title">1/35 KV-1 1942年初期生産型</p>
+                                <p class="work-card-desc">41.5口径76.2mm戦車砲ZIS-5装備 鋳造砲塔車両</p>
+                                <p class="work-card-meta"><i class="far fa-calendar-alt"></i> 2021年4月完成</p>
+                            </div>
+                        </a>
+
+                        <a class="work-card" href="work.html?id=d14606ee-b09c-4051-91c1-7979fc619461">
+                            <img class="work-card-img" src="https://i.imgur.com/cp0idrz.jpg" alt="1/35 九七式中戦車【新砲塔チハ】" loading="lazy">
+                            <div class="work-card-body">
+                                <p class="work-card-title">1/35 九七式中戦車【新砲塔チハ】</p>
+                                <p class="work-card-desc">戦車第7連隊 高久伍長車（637号車） コレヒドール島 1942年5月</p>
+                                <p class="work-card-meta"><i class="far fa-calendar-alt"></i> 2025年2月完成</p>
+                            </div>
+                        </a>
+
+                        <a class="work-card" href="work.html?id=9f904b56-5943-4c74-b0dd-8a9a47343027">
+                            <img class="work-card-img" src="https://i.imgur.com/lFEmSUt.jpg" alt="1/35 IV号戦車 F2/G前期型" loading="lazy">
+                            <div class="work-card-body">
+                                <p class="work-card-title">1/35 IV号戦車 F2/G前期型</p>
+                                <p class="work-card-desc">Sd.Kfz.161/1「マークIVスペシャル」1942年秋 北アフリカ</p>
+                                <p class="work-card-meta"><i class="far fa-calendar-alt"></i> 2020年頃完成</p>
+                            </div>
+                        </a>
+
+                    </div>
+                </section><!-- /#section-afv -->
+
+                <!-- ===== 艦船モデル ===== -->
+                <section class="genre-section" id="section-ship" data-genre="ship">
+                    <header class="genre-header">
+                        <i class="fas fa-ship"></i>
+                        <h2>艦船モデル</h2>
+                        <span class="genre-count">3作品</span>
+                    </header>
+                    <div class="works-grid">
+
+                        <a class="work-card" href="work.html?id=e996fd60-d8fb-446c-9da7-3b780c5b572c">
+                            <img class="work-card-img" src="https://i.imgur.com/UyMJWV2.jpg" alt="ノンスケール 原子力巡洋艦 ロングビーチ" loading="lazy">
+                            <div class="work-card-body">
+                                <p class="work-card-title">ノンスケール(1/510) 原子力巡洋艦 ロングビーチ</p>
+                                <p class="work-card-desc">近代化改装前、レギュラスII巡航ミサイル IF装備仕様</p>
+                                <p class="work-card-meta"><i class="far fa-calendar-alt"></i> 2024年12月完成</p>
+                            </div>
+                        </a>
+
+                        <a class="work-card" href="work.html?id=058df00c-e67b-4a00-943a-796a282ac61a">
+                            <img class="work-card-img" src="https://i.imgur.com/BYzPKyO.jpg" alt="ノンスケール Uボート VII-C" loading="lazy">
+                            <div class="work-card-body">
+                                <p class="work-card-title">ノンスケール Uボート VII-C</p>
+                                <p class="work-card-desc">Uボート VII-C U-581 1942年1月 第二次戦闘哨戒時</p>
+                                <p class="work-card-meta"><i class="far fa-calendar-alt"></i> 製作時期不明、25年以上前</p>
+                            </div>
+                        </a>
+
+                        <a class="work-card" href="work.html?id=05ed8bc8-8012-4af9-83e7-7faf072ca67b">
+                            <img class="work-card-img" src="https://i.imgur.com/KTEwxL9.jpg" alt="1/350 USS グリーンヴィル SSN-772" loading="lazy">
+                            <div class="work-card-body">
+                                <p class="work-card-title">1/350 USS グリーンヴィル SSN-772</p>
+                                <p class="work-card-desc">ロサンゼルス級フライトIII 攻撃型原子力潜水艦 第61番艦</p>
+                                <p class="work-card-meta"><i class="far fa-calendar-alt"></i> 製作時期不明、2019年頃</p>
+                            </div>
+                        </a>
+
+                    </div>
+                </section><!-- /#section-ship -->
+
+                <!-- ===== ロボット・SFモデル ===== -->
+                <section class="genre-section" id="section-robot" data-genre="robot">
+                    <header class="genre-header">
+                        <i class="fas fa-robot"></i>
+                        <h2>ロボット・SFモデル</h2>
+                        <span class="genre-count">3作品</span>
+                    </header>
+                    <div class="works-grid">
+
+                        <a class="work-card" href="work.html?id=e7360434-a85e-42b9-b471-99acf78da4e8">
+                            <img class="work-card-img" src="https://i.imgur.com/iy78pit.jpg" alt="1/100 RX-0 ユニコーンガンダム" loading="lazy">
+                            <div class="work-card-body">
+                                <p class="work-card-title">1/100 RX-0 ユニコーンガンダム</p>
+                                <p class="work-card-desc">宇宙世紀0096年 サイド4 インダストリアル7</p>
+                                <p class="work-card-meta"><i class="far fa-calendar-alt"></i> 2025年12月完成</p>
+                            </div>
+                        </a>
+
+                        <a class="work-card" href="work.html?id=77e3ba2b-fabf-4677-9d49-cb744691e775">
+                            <img class="work-card-img" src="https://i.imgur.com/9RFgoNI.jpg" alt="ノンスケール RX-78-02 白いガンダム" loading="lazy">
+                            <div class="work-card-body">
+                                <p class="work-card-title">ノンスケール RX-78-02 白いガンダム</p>
+                                <p class="work-card-desc">機動戦士Gundam GQuuuuuuX 世界 宇宙世紀0079年9月18日</p>
+                                <p class="work-card-meta"><i class="far fa-calendar-alt"></i> 2025年8月完成</p>
+                            </div>
+                        </a>
+
+                        <a class="work-card" href="work.html?id=6e2fa36d-3ed8-40bc-8d51-4cdb818fb00e">
+                            <img class="work-card-img" src="https://i.imgur.com/t4Qk7GV.jpg" alt="1/144 ナイト・オブ・ゴールド ラキシス" loading="lazy">
+                            <div class="work-card-body">
+                                <p class="work-card-title">1/144 ナイト・オブ・ゴールド ラキシス</p>
+                                <p class="work-card-desc">星団歴2988年 アドラー星</p>
+                                <p class="work-card-meta"><i class="far fa-calendar-alt"></i> 2025年5月完成</p>
+                            </div>
+                        </a>
+
+                    </div>
+                </section><!-- /#section-robot -->
+
+                <!-- ===== その他モデル ===== -->
+                <section class="genre-section" id="section-other" data-genre="other">
+                    <header class="genre-header">
+                        <i class="fas fa-shapes"></i>
+                        <h2>その他モデル</h2>
+                        <span class="genre-count">2作品</span>
+                    </header>
+                    <div class="works-grid">
+
+                        <a class="work-card" href="work.html?id=f6a95b4a-c0ab-43fd-8ef9-f1e4d97efada">
+                            <img class="work-card-img" src="https://i.imgur.com/CsoAZKr.jpg" alt="1/400 清水寺" loading="lazy">
+                            <div class="work-card-body">
+                                <p class="work-card-title">1/400 清水寺</p>
+                                <p class="work-card-desc">清水寺「平成の大改修」実施後 2020年 秋の紅葉シーズン</p>
+                                <p class="work-card-meta"><i class="far fa-calendar-alt"></i> 2023年9月完成</p>
+                            </div>
+                        </a>
+
+                        <a class="work-card" href="work.html?id=2764ce99-5412-4491-9bb6-95b3f8aa494b">
+                            <img class="work-card-img" src="https://i.imgur.com/7oOUsZO.jpg" alt="1/460 会津 鶴ヶ城" loading="lazy">
+                            <div class="work-card-body">
+                                <p class="work-card-title">1/460 会津 鶴ヶ城</p>
+                                <p class="work-card-desc">慶応四年四月 会津戦争勃発直前、松平容保公が帰城、桜満開の情景</p>
+                                <p class="work-card-meta"><i class="far fa-calendar-alt"></i> 2022年9月完成</p>
+                            </div>
+                        </a>
+
+                    </div>
+                </section><!-- /#section-other -->
+
+            </div><!-- /.container -->
+        </div><!-- /.works-main -->
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 余暇が出来たので模型製作を再開した件. All rights reserved.</p>
+            <p class="admin-link"><a href="admin.html">管理画面</a></p>
+        </div>
+    </footer>
+
+    <!-- ページトップへボタン -->
+    <a href="#" class="back-to-top" id="backToTop" aria-label="ページトップへ">
+        <i class="fas fa-chevron-up"></i>
+    </a>
+
+    <script>
+        // ===== ジャンルフィルター =====
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const genreSections = document.querySelectorAll('.genre-section');
+
+        filterButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const filter = btn.dataset.filter;
+
+                // ボタンのアクティブ状態を更新
+                filterButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                // セクションの表示/非表示を切り替え
+                genreSections.forEach(section => {
+                    if (filter === 'all' || section.dataset.genre === filter) {
+                        section.classList.remove('hidden');
+                    } else {
+                        section.classList.add('hidden');
+                    }
+                });
+
+                // スムーズスクロールでフィルター後の位置を調整
+                if (filter !== 'all') {
+                    const targetSection = document.getElementById('section-' + filter);
+                    if (targetSection) {
+                        setTimeout(() => {
+                            targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }, 50);
+                    }
+                } else {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            });
+        });
+
+        // ===== ページトップへボタン =====
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+        backToTop.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
