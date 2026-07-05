@@ -502,22 +502,43 @@ function renderAdditionalImages(images) {
 function addImageRow(imgData) {
     const container = document.getElementById('additionalImagesContainer');
     const url = (imgData && imgData.url) ? imgData.url : '';
-    // \nを実際の改行に変換してtextareaに表示
-    const caption = (imgData && imgData.caption) ? imgData.caption.replace(/\n/g, '\n') : '';
+    const caption = (imgData && imgData.caption) ? imgData.caption : '';
+
+    // innerHTML不使用・DOM直接構築でURL欠落バグを防ぐ
     const row = document.createElement('div');
     row.className = 'additional-img-row';
-    row.innerHTML = `
-        <img src="${escHtml(url)}" alt=""
-             onerror="this.src='https://via.placeholder.com/100x70?text=NoImg'"
-             style="width:100px;height:70px;object-fit:cover;border-radius:4px;flex-shrink:0;">
-        <div class="img-inputs">
-            <input type="text" placeholder="画像URL (https://i.imgur.com/XXXXXXX.jpg)"
-                   value="${escHtml(url)}" class="img-url-input"
-                   oninput="updateImgPreview(this)">
-            <textarea placeholder="キャプション（説明文）" class="img-caption-input">${escHtml(caption)}</textarea>
-        </div>
-        <button class="btn-remove-img" onclick="this.parentElement.remove()">✕</button>
-    `;
+
+    const img = document.createElement('img');
+    img.src = url || 'https://via.placeholder.com/100x70?text=NoImg';
+    img.alt = '';
+    img.style.cssText = 'width:100px;height:70px;object-fit:cover;border-radius:4px;flex-shrink:0;';
+    img.onerror = function() { this.src = 'https://via.placeholder.com/100x70?text=NoImg'; };
+
+    const inputsDiv = document.createElement('div');
+    inputsDiv.className = 'img-inputs';
+
+    const urlInput = document.createElement('input');
+    urlInput.type = 'text';
+    urlInput.placeholder = '画像URL (https://i.imgur.com/XXXXXXX.jpg)';
+    urlInput.className = 'img-url-input';
+    urlInput.value = url;  // .value直接代入でエスケープ問題ゼロ
+    urlInput.addEventListener('input', function() { updateImgPreview(this); });
+
+    const captionTA = document.createElement('textarea');
+    captionTA.placeholder = 'キャプション（説明文）';
+    captionTA.className = 'img-caption-input';
+    captionTA.value = caption;  // .value直接代入でエスケープ問題ゼロ
+
+    const removeBtn = document.createElement('button');
+    removeBtn.className = 'btn-remove-img';
+    removeBtn.textContent = '✕';
+    removeBtn.addEventListener('click', function() { row.remove(); });
+
+    inputsDiv.appendChild(urlInput);
+    inputsDiv.appendChild(captionTA);
+    row.appendChild(img);
+    row.appendChild(inputsDiv);
+    row.appendChild(removeBtn);
     container.appendChild(row);
 }
 
@@ -604,10 +625,29 @@ function deleteWork() {
 
 // ===== JS生成・コピー =====
 function generateOutput() {
+    // 念のため全URLの imgur.com → i.imgur.com 自動修正
+    worksData = worksData.map(work => {
+        if (work.main_image) {
+            work.main_image = fixImgurUrl(work.main_image);
+        }
+        if (work.additional_images) {
+            work.additional_images = work.additional_images.map(img => ({
+                ...img,
+                url: fixImgurUrl(img.url)
+            }));
+        }
+        return work;
+    });
     // JSON.stringifyが\nを\\nに自動エスケープするため、改行は正しく処理される
     const json = JSON.stringify(worksData, null, 2);
     const js = `window.worksData = ${json};\n`;
     document.getElementById('jsOutput').value = js;
+}
+
+// imgur.com → i.imgur.com 自動修正（i.が既にある場合は触らない）
+function fixImgurUrl(url) {
+    if (!url) return url;
+    return url.replace(/https:\/\/(?!i\.)imgur\.com\//g, 'https://i.imgur.com/');
 }
 
 // works-data.js読込時、\\nエスケープされた文字列をJavaScript文字列に戻す処理は不要
