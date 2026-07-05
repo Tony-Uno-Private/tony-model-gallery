@@ -1015,6 +1015,10 @@ window.worksData = [
       {
         "url": "https://i.imgur.com/koDub65.jpg",
         "caption": "実はこの潜水艦、船底に重しを詰め込んでおり、浮くんです！（爆）"
+      },
+      {
+        "url": "https://i.imgur.com/uYFrSdL.jpg",
+        "caption": "\"Take us to silent running!\""
       }
     ],
     "likes": 0,
