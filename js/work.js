@@ -31,6 +31,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // 作品を読み込む
 function loadWork(workId) {
+    // 静的ページ（works/xxx.html）が存在する場合はリダイレクト
+    // 現在のパスが既に works/ 配下でなければリダイレクト
+    if (!window.location.pathname.includes('/works/')) {
+        window.location.replace(`works/${workId}.html`);
+        return;
+    }
+
     const allWorks = window.worksData || [];
     currentWork = allWorks.find(work => work.id === workId);
 
