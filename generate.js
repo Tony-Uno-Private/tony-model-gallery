@@ -247,7 +247,104 @@ console.log(`✅ 成功: ${successCount}件`);
 if (errorCount > 0) console.log(`❌ 失敗: ${errorCount}件`);
 console.log(`📂 出力先: ${OUTPUT_DIR}`);
 console.log(`============================\n`);
-console.log('次の手順:');
-console.log('  GitHub Desktop を開いて変更を確認');
-console.log('  → コミット＆プッシュ');
+
+// ===== works.html のリンクを works/xxx.html 形式に更新 =====
+console.log('📝 works.html のリンクを更新中...');
+const worksHtmlPath = path.join(__dirname, 'works.html');
+if (fs.existsSync(worksHtmlPath)) {
+    let worksHtml = fs.readFileSync(worksHtmlPath, 'utf8');
+
+    // ① work.html?id=UUID → works/UUID.html に置換
+    worksHtml = worksHtml.replace(
+        /href="work\.html\?id=([0-9a-f-]{36})"/g,
+        'href="works/$1.html"'
+    );
+    // ② works/UUID" 形式（.htmlなし・末尾が"）になっている場合に .html を付与
+    //    works/UUID.html" は変更しない（後方参照で .html が含まれていないものだけ置換）
+    worksHtml = worksHtml.replace(
+        /href="works\/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})"/g,
+        'href="works/$1.html"'
+    );
+    fs.writeFileSync(worksHtmlPath, worksHtml, 'utf8');
+    console.log('✅ works.html を更新しました');
+} else {
+    console.log('⚠️  works.html が見つかりません（スキップ）');
+}
+
+// ===== work.js にリダイレクト処理を追加（初回のみ） =====
+console.log('📝 work.js のリダイレクト処理を確認中...');
+const workJsPath = path.join(__dirname, 'js', 'work.js');
+if (fs.existsSync(workJsPath)) {
+    let workJs = fs.readFileSync(workJsPath, 'utf8');
+    if (!workJs.includes('works/' )) {
+        // loadWork関数の先頭にリダイレクト処理を挿入
+        workJs = workJs.replace(
+            'function loadWork(workId) {',
+            `function loadWork(workId) {
+    // 静的ページ（works/xxx.html）が存在する場合はリダイレクト
+    const staticUrl = \`works/\${workId}.html\`;
+    // 現在のパスが既に works/ 配下でなければリダイレクト
+    if (!window.location.pathname.includes('/works/')) {
+        window.location.replace(staticUrl);
+        return;
+    }`
+        );
+        fs.writeFileSync(workJsPath, workJs, 'utf8');
+        console.log('✅ work.js にリダイレクト処理を追加しました');
+    } else {
+        console.log('✅ work.js は既にリダイレクト処理済みです');
+    }
+}
+
+// ===== sitemap.xml に works/ 配下のURLを追加（未掲載分のみ追記）=====
+console.log('📝 sitemap.xml を更新中...');
+const sitemapPath = path.join(__dirname, 'sitemap.xml');
+if (fs.existsSync(sitemapPath)) {
+    let sitemap = fs.readFileSync(sitemapPath, 'utf8');
+    const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+
+    // works-data.js の全作品を走査し、sitemap未掲載のものだけ追記
+    const newEntries = worksData
+        .filter(work => {
+            const locTag = `<loc>${SITE_URL}/works/${work.id}.html</loc>`;
+            return !sitemap.includes(locTag); // 未掲載のみ対象
+        })
+        .map(work => {
+            return `  <url>
+    <loc>${SITE_URL}/works/${work.id}.html</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>${escHtml(work.main_image)}</image:loc>
+      <image:title>${escHtml(work.title)}</image:title>
+    </image:image>
+  </url>`;
+        });
+
+    if (newEntries.length === 0) {
+        console.log('✅ sitemap.xml は最新です（追加URLなし）');
+    } else {
+        sitemap = sitemap.replace('</urlset>', `${newEntries.join('\n')}\n</urlset>`);
+        fs.writeFileSync(sitemapPath, sitemap, 'utf8');
+        console.log(`✅ sitemap.xml に ${newEntries.length}件の新規URLを追加しました`);
+        // 追加した作品名を表示
+        worksData
+            .filter(work => newEntries.some(e => e.includes(work.id)))
+            .forEach(work => console.log(`   + ${work.title}`));
+    }
+} else {
+    console.log('⚠️  sitemap.xml が見つかりません（スキップ）');
+}
+
+console.log('\n============================');
+console.log('🎉 全処理完了！');
+console.log('============================\n');
+console.log('【次の手順】');
+console.log('  1. GitHub Desktop を開いて変更ファイルを確認');
+console.log('     - works/（新作品のHTMLが追加されているか）');
+console.log('     - works.html（新作品のカードリンクが追加されているか）');
+console.log('     - sitemap.xml（新作品のURLが追加されているか）');
+console.log('  2. コミット＆プッシュ');
+console.log('  3. Search Console → サイトマップ → sitemap.xml を再送信');
 console.log('');
