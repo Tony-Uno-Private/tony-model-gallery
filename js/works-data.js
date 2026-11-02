@@ -1027,7 +1027,7 @@ window.worksData = [
   },
   {
     "id": "e0466d57-c3b7-422f-b56e-b0efb7d56811",
-    "title": "1/48 メッサーシュミットBf109G-6",
+    "title": "1/48 メッサーシュミットBf109G-6 バルクホルン大尉機",
     "genre": "aircraft",
     "completed_date": "1993年頃完成",
     "main_image": "https://i.imgur.com/FdD8rnD.jpg",
@@ -1053,7 +1053,7 @@ window.worksData = [
   },
   {
     "id": "00f07b3b-6175-4922-bce7-02a11658aab5",
-    "title": "1/48 メッサーシュミットBf109G-6",
+    "title": "1/48 メッサーシュミットBf109G-6 ハルトマン少尉機",
     "genre": "aircraft",
     "completed_date": "1993年頃完成",
     "main_image": "https://i.imgur.com/uBdGyqp.jpg",
