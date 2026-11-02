@@ -61,7 +61,7 @@ function displayWorks(works) {
     }
     
     container.innerHTML = works.map(work => `
-        <a href="work.html?id=${work.id}" class="gallery-item">
+        <a href="works/${work.id}.html" class="gallery-item">
             <img src="${work.main_image}" alt="${work.title}">
             <div class="gallery-item-info">
                 <h3>${work.title}</h3>
