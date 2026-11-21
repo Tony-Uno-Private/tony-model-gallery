@@ -36,7 +36,7 @@ function displayNewWorks(works) {
     }
     
     container.innerHTML = works.map(work => `
-        <a href="work.html?id=${work.id}" class="new-work-item">
+        <a href="works/${work.id}.html" class="new-work-item">
             <img src="${work.main_image}" alt="${work.title}">
             <div class="new-work-info">
                 <h3>
